@@ -17,7 +17,7 @@ Vazifalar boshqaruvi: Django ORM
 
 O'rnatish
 
-Repositoriyni klonlang:git clone https://github.com/sizning-username/todo-app.git
+Repositoriyni klonlang
 cd todo-app
 
 
