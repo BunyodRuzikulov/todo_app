@@ -1,0 +1,88 @@
+{% load static %}
+   <!DOCTYPE html>
+   <html lang="uz">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>To-Do - Dashboard</title>
+       <link rel="stylesheet" href="{% static 'styles.css' %}">
+   </head>
+   <body>
+       <div class="container dashboard-container">
+           <header class="dashboard-header">
+               <div class="user-info">
+                   <div class="user-avatar">{{ user.username|first|upper }}</div>
+                   <span class="user-name">{{ user.username }}</span>
+               </div>
+               <a href="{% url 'logout' %}" class="btn btn-logout">Chiqish</a>
+           </header>
+           
+           <main class="dashboard-main">
+               <div class="dashboard-actions">
+                   <a href="{% url 'add_task' %}" class="btn btn-add-task">
+                       <span>+</span> Yangi vazifa
+                   </a>
+                   
+                   <div class="search-filter">
+                       <form method="get">
+                           <input type="text" name="q" value="{{ query }}" placeholder="Qidirish...">
+                           <select name="filter">
+                               <option value="all" {% if filter_type == 'all' %}selected{% endif %}>Barcha vazifalar</option>
+                               <option value="today" {% if filter_type == 'today' %}selected{% endif %}>Bugungi</option>
+                               <option value="completed" {% if filter_type == 'completed' %}selected{% endif %}>Bajarilgan</option>
+                               <option value="important" {% if filter_type == 'important' %}selected{% endif %}>Muhim</option>
+                           </select>
+                           <button type="submit" class="btn btn-primary">Filtrlash</button>
+                       </form>
+                   </div>
+               </div>
+               
+               <div class="tasks-container">
+                   <h2>Mening vazifalarim</h2>
+                   
+                   <div class="task-list">
+                       {% for task in tasks %}
+                           <div class="task {% if task.is_completed %}completed{% elif task.is_important %}important{% endif %}">
+                               <a href="{% url 'toggle_task' task.id %}" class="task-checkbox {% if task.is_completed %}checked{% endif %}">{% if task.is_completed %}✓{% endif %}</a>
+                               <div class="task-content">
+                                   <h3 class="task-title">{{ task.title }}</h3>
+                                   <p class="task-description">{{ task.description }}</p>
+                                   <div class="task-meta">
+                                       <span class="task-category">{{ task.get_category_display }}</span>
+                                       <span class="task-date">{{ task.due_date|date:"d.m.Y" }}</span>
+                                       {% if task.is_important %}
+                                           <span class="important-badge">Muhim</span>
+                                       {% endif %}
+                                   </div>
+                               </div>
+                               <div class="task-actions">
+                                   <a href="{% url 'edit_task' task.id %}" class="btn-edit">✏️</a>
+                                   <a href="{% url 'delete_task' task.id %}" class="btn-delete">🗑️</a>
+                               </div>
+                           </div>
+                       {% empty %}
+                           <p>Hech qanday vazifa topilmadi.</p>
+                       {% endfor %}
+                   </div>
+               </div>
+           </main>
+           
+           <footer class="dashboard-footer">
+               <div class="stats">
+                   <div class="stat-item">
+                       <span class="stat-number">{{ stats.completed }}</span>
+                       <span class="stat-label">Bajarilgan</span>
+                   </div>
+                   <div class="stat-item">
+                       <span class="stat-number">{{ stats.pending }}</span>
+                       <span class="stat-label">Qolgan</span>
+                   </div>
+                   <div class="stat-item">
+                       <span class="stat-number">{{ stats.important }}</span>
+                       <span class="stat-label">Muhim</span>
+                   </div>
+               </div>
+           </footer>
+       </div>
+   </body>
+   </html>

@@ -1,0 +1,52 @@
+{% load static %}
+   <!DOCTYPE html>
+   <html lang="uz">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>To-Do - Kirish</title>
+       <link rel="stylesheet" href="{% static 'styles.css' %}">
+   </head>
+   <body>
+       <div class="container auth-container">
+           <header>
+               <h1>Kirish</h1>
+               <p>Hisobingizga kiring</p>
+           </header>
+           
+           <main class="auth-form">
+               {% if messages %}
+                   {% for message in messages %}
+                       <div class="message {{ message.tags }}">{{ message }}</div>
+                   {% endfor %}
+               {% endif %}
+               <form method="post">
+                   {% csrf_token %}
+                   <div class="form-group">
+                       <label for="email">Elektron pochta</label>
+                       <input type="email" id="email" name="email" placeholder="email@example.com" required>
+                   </div>
+                   
+                   <div class="form-group">
+                       <label for="password">Parol</label>
+                       <input type="password" id="password" name="password" placeholder="Parolingizni kiriting" required>
+                   </div>
+                   
+                   <div class="form-options">
+                       <div class="checkbox-group">
+                           <input type="checkbox" id="remember-me" name="remember-me">
+                           <label for="remember-me">Eslab qolish</label>
+                       </div>
+                       <a href="#" class="forgot-password">Parolni unutdingizmi?</a>
+                   </div>
+                   
+                   <button type="submit" class="btn btn-primary">Kirish</button>
+               </form>
+               
+               <div class="auth-links">
+                   <p>Hisobingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'tish</a></p>
+               </div>
+           </main>
+       </div>
+   </body>
+   </html>

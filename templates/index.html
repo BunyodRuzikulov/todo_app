@@ -1,0 +1,48 @@
+{% load static %}
+   <!DOCTYPE html>
+   <html lang="uz">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>To-Do - Bosh sahifa</title>
+       <link rel="stylesheet" href="{% static 'styles.css' %}">
+   </head>
+   <body>
+       <div class="container">
+           <header>
+               <h1>To-Do Ilovasi</h1>
+               <p>Kundalik vazifalaringizni boshqarish uchun oddiy va qulay vosita</p>
+           </header>
+           
+           <main class="main-content">
+               <div class="app-preview">
+                   <div class="task-preview">
+                       {% for task in tasks %}
+                           <div class="preview-task {% if task.is_completed %}completed{% elif task.is_important %}important{% endif %}">
+                               <span class="checkmark">{% if task.is_completed %}✓{% endif %}</span>
+                               <span>{{ task.title }}</span>
+                               {% if task.is_important %}
+                                   <span class="important-badge">!</span>
+                               {% endif %}
+                           </div>
+                       {% endfor %}
+                   </div>
+               </div>
+               
+               <div class="auth-buttons">
+                   <a href="{% url 'login' %}" class="btn btn-login">Kirish</a>
+                   <a href="{% url 'register' %}" class="btn btn-register">Ro'yxatdan o'tish</a>
+               </div>
+               
+               <div class="demo-section">
+                   <p>Ilovani sinab ko'rmoqchimisiz?</p>
+                   <a href="{% url 'dashboard' %}" class="btn btn-demo">Demo rejim</a>
+               </div>
+           </main>
+           
+           <footer>
+               <p>© 2023 To-Do Ilovasi. Barcha huquqlar himoyalangan.</p>
+           </footer>
+       </div>
+   </body>
+   </html>
