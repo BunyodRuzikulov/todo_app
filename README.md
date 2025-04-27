@@ -43,7 +43,5 @@ http://127.0.0.1:8000/ manzilida bosh sahifani oching.
 Ro'yxatdan o'ting yoki kirish qiling.
 Dashboard orqali vazifalarni boshqaring.
 
-Litsenziya
-MIT Litsenziyasi ostida tarqatiladi.
 Aloqa
 Telegram: @https://t.me/Bunyod_Ruziqulov  
